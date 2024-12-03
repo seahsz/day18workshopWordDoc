@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing</title>
+</head>
+
+<body>
+
+    <h1>Todos</h1>
+
+    <div data-th-if="${not #lists.isEmpty(todoList)}">
+
+        <form method="get" action="/listing/filter">
+            <h4>Filters</h4>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>By Status</td>
+                        <td>
+                            <select name="statusOpt">
+                                <option value="pending">Pending</option>
+                                <option value="started">Started</option>
+                                <option value="in_progress">Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit">Filter</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+
+        <table>
+            <thead>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                <tr data-th-each=" t : ${todoList}" data-th-object="${t}">
+                    <td data-th-text="*{id}"></td>
+                    <td data-th-text="*{name}"></td>
+                    <td data-th-text="*{description}"></td>
+                    <td data-th-text="*{dueDate}"></td>
+                    <td data-th-text="*{priority}"></td>
+                    <td data-th-text="*{status}"></td>
+                    <td data-th-text="*{createdAt}"></td>
+                    <td data-th-text="*{updatedAt}"></td>
+                    <td>
+                        <form method="GET" data-th-action="@{/updateTodo/{orderId}(orderId=${t.id})}">
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="GET" data-th-action="@{/deleteTodo/{orderId}(orderId=${t.id})}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+
+</html>
